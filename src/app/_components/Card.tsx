@@ -12,6 +12,8 @@ export function Card ({ data, user }: { data: LyricReduced, user?: User }) {
 	const content = data.content;
 	console.log("Card received: ", title);
 
+	const cardRemoveMutation = api.lyrics.remove.useMutation({});
+
 	return(
 		<div className="mx-auto flex flex-row">
 		<div className={`w-[0.5em]`}></div>
@@ -24,8 +26,8 @@ export function Card ({ data, user }: { data: LyricReduced, user?: User }) {
 				<div className="font-semibold text-lg mr-auto whitespace-nowrap">{`${title}`}</div>
 				{ user && user.admin && 
                     <button type="button" onClick={() => {
-                            console.log("Removing card with id ", id)
-                            api.lyrics.remove.useMutation({}).mutate({id})
+                            console.log("Removing card with id ", id);
+                            cardRemoveMutation.mutate({id});
                         }}>
                         X
                     </button>
