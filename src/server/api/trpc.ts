@@ -106,3 +106,28 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     },
   });
 });
+
+export const adminProcedure = t.procedure.use( async ({ ctx, next }) => {
+  if (!ctx.session || !ctx.session.user) {
+
+    console.error(`${ctx.session?.user ? "User is not an admin" : "You must be logged in as admin"}`)
+    throw new TRPCError({ code: `UNAUTHORIZED` });
+  }
+
+  const user = await db.user.findUnique({
+    where: {
+      id: ctx.session?.user.id
+    }
+  })
+
+  if (!user) throw new TRPCError({ code: "NOT_FOUND"})
+  if (!user.admin) throw new TRPCError({ code: "UNAUTHORIZED"})
+
+  return next({
+    ctx: {
+      // infers the `session` as non-nullables
+      session: { ...ctx.session, user: ctx.session.user },
+      admin: user.admin,
+    },
+  });
+});

@@ -14,6 +14,7 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+// EXAMPLE, NOT USED
 model Post {
     id        Int      @id @default(autoincrement())
     name      String
@@ -24,6 +25,17 @@ model Post {
     createdById String
 
     @@index([name])
+}
+
+model Lyric {
+    id Int @id @default(autoincrement())
+
+    author String
+    title String
+    content String
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String
 }
 
 // Necessary for Next auth
@@ -57,12 +69,17 @@ model Session {
 model User {
     id            String    @id @default(cuid())
     name          String?
+    admin         Boolean @default(false)
+
     email         String?   @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+
+    posts  Post[] // EXAMPLE, NOT USED
+    lyrics Lyric[]
+
 }
 
 model VerificationToken {

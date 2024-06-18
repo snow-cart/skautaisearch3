@@ -20,6 +20,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      admin: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -45,6 +46,9 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
+    async redirect({ url, baseUrl }) {
+      return baseUrl+"/admin";
+    },
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
@@ -52,6 +56,7 @@ export const authOptions: NextAuthOptions = {
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
+
     /**
      * ...add more providers here.
      *
@@ -62,6 +67,10 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  // pages: { TODO: make custom signin, signout pages
+  //   signIn: '/signin',
+  //   signOut: '/signout',
+  // }
 };
 
 /**
