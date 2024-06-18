@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return baseUrl+"/admin";
     },
   },

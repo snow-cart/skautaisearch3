@@ -1,7 +1,4 @@
-import { User } from "@prisma/client";
 import { SearchElement } from "./_components/Search";
-import { getServerAuthSession } from "~/server/auth";
-import { db } from "~/server/db";
 
 export default async function Home () {
 

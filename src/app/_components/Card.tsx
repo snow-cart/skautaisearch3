@@ -2,11 +2,8 @@
 
 
 import { api } from "~/trpc/react";
-import { Session } from "next-auth";
-import { LyricReduced } from "~/server/api/routers/lyrics";
-import { getSession } from "next-auth/react";
-import { useEffect, useState } from "react"
-import { User } from "@prisma/client";
+import { type LyricReduced } from "~/server/api/routers/lyrics";
+import { type User } from "@prisma/client";
 
 export function Card ({ data, user }: { data: LyricReduced, user?: User }) {
 	const id = data.id;
@@ -44,28 +41,16 @@ export function Card ({ data, user }: { data: LyricReduced, user?: User }) {
 
 export function Cards ({ data, user }: { data: (LyricReduced | null)[] | undefined, user?: User}) {
 
-    const [session, setSession] = useState<Session | null>(null);
-
-    useEffect(() => {
-        const fetchSession = async () => {
-            const sessionData = await getSession();
-            setSession(sessionData);
-        };
-        fetchSession();
-    }, []);
-
-
-
-	console.log("Card collection received",);
+	console.log("Card collection received");
 
 	return (
 		<div className="flex mb-auto w-full">
 			<div className='w-[5vw] md:w-[3vw]'></div>
 			<div className="w-full flex flex-wrap">
-                {data?.map( (element) => (
+                {data?.map( (element, i) => (
                     element === null 
                     ? null
-                    : (<Card data={element} user={user}/>)
+                    : (<Card data={element} user={user} key={i}/>)
                 ))}
 			</div>
 			<div className='w-[5vw] sm:w-[3vw] md:w-[1vw]'></div>

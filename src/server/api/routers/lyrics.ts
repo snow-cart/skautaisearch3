@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Lyric } from "@prisma/client";
+import { type Lyric } from "@prisma/client";
 
 import {
   adminProcedure,

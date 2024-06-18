@@ -1,17 +1,16 @@
 "use client";
 
-import { Cards } from '../_components/Card';
 import { SearchElement } from '../_components/Search';
 import { api } from '~/trpc/react';
-import { LyricReduced } from '~/server/api/routers/lyrics';
-import { User } from '@prisma/client';
+import { type LyricReduced } from '~/server/api/routers/lyrics';
+import { type User } from '@prisma/client';
 
 import { useRouter } from "next/navigation"
 
 export function AdminLoggedIn ({ user }: { user: User }) {
 
 	let isSearchToggle = false;
-	let formData: LyricReduced = {
+	const formData: LyricReduced = {
 		id: 0,
 		title: "Untitled",
 		author: "-",

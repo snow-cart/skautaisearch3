@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
-        {env.NODE_ENV === "development" && <script src="http://localhost:8097"></script>}
+        {env.NODE_ENV === "development" && <script src="http://localhost:8097" async/>}
       </body>
     </html>
     </>
